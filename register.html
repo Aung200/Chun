@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vanwalk</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/header-footer.css" />
+    <style>
+      .register-wrapper {
+        width: 300px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      .register_box {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 10px;
+      }
+
+      .register_btn {
+        margin-top: 10px;
+        padding: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="sticky-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="./index.html">
+              <img src="./public/logo.jpeg" alt="Vanwalk Logo" />
+            </a>
+          </div>
+          <nav>
+            <ul>
+              <li><a href="./newarrivals.html">New Arrivals</a></li>
+              <li><a href="./sales.html">On Sales</a></li>
+              <li class="dropdown">
+                <a href="./products.html">Products</a>
+                <ul class="dropdown-content">
+                  <li><a href="./tops.html">Tops</a></li>
+                  <li><a href="./bottoms.html">Bottoms</a></li>
+                  <li><a href="./dresses.html">Dresses</a></li>
+                </ul>
+              </li>
+              <li>
+                <form class="search-form" action="./search.html" method="post">
+                  <input type="text" placeholder="Search" name="search" />
+                  <button type="submit">Go</button>
+                </form>
+              </li>
+              <li><a href="./login.html">Login</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <div class="main_wrapper" style="padding: 80px 0px;">
+      <div class="container">
+        <div class="register-wrapper">
+          <h1>Register</h1>
+          <form action="/register" method="post">
+            <label for="email">Email:</label>
+            <input
+              class="register_box"
+              type="email"
+              id="email"
+              name="email"
+              required
+            />
+
+            <label for="name">Name:</label>
+            <input
+              class="register_box"
+              type="text"
+              id="name"
+              name="name"
+              required
+            />
+
+            <label for="password">Password:</label>
+            <input
+              class="register_box"
+              type="password"
+              id="password"
+              name="password"
+              required
+            />
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input
+              class="register_box"
+              type="password"
+              id="confirm_password"
+              name="confirm_password"
+              required
+            />
+
+            <button class="register_btn" type="submit">Register</button>
+            <a href="./login.html" style="text-align: center; margin-top: 15px;">Already Registered! <u>Login</u> here!</a>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="contact-info">
+            <p><b>About Us</b></p>
+            <p>
+              Vanwalk offers an online shopping experience for clothing,<br />
+              featuring Tops, Bottoms, and Dresses. Users can browse, filter,<br />
+              and search for products, add items to a cart, and checkout. <br />
+              Registration and login are required for purchases, <br />
+              with receipts sent via email.
+            </p>
+          </div>
+          <div class="contact-info">
+            <p><b>SiteMaps</b></p>
+            <nav>
+              <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./newarrivals.html">New Arrivals</a></li>
+                <li><a href="./sales">On Sales</a></li>
+                <li><a href="./products.html">Products</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="contact-info">
+            <p><b>Contact Info</b></p>
+            <p>
+              <b>Address:</b> 44 Pekin Street #02-01 Far East Square,
+              Singapore<br />
+              <b>Telephone:</b> +65 62255366<br />
+              <b>Email:</b>
+              <a href="mailto:vanwalk@gmail.com" style="color: black"
+                >vanwalk@gmail.com</a
+              >
+            </p>
+          </div>
+        </div>
+        <p
+          style="
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.253);
+            padding: 20px 0px 0px 0px;
+            margin-bottom: 0px;
+          "
+        >
+          &copy; 2023 Vanwalk. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
