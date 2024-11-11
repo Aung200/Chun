@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
 
                 <label for="productImage">Product Image</label>
                 <img src="<?php echo $product['image_path']; ?>" alt="Product Image" width="100">
-                <input style="border-color: white;background-color: white; padding: 5px;" type="file" id="productImage" name="productImage" accept="image/*" required>
+                <input style="border-color: white;background-color: white; padding: 5px;" type="file" id="productImage" name="productImage" accept="image/*">
 
                 <label for="description">Description</label>
                 <textarea id="description" name="description" required><?php echo $product['Description']; ?></textarea>
