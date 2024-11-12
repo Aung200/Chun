@@ -103,18 +103,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="./newarrivals.html">New Arrivals</a></li>
-                        <li><a href="./sales.html">On Sales</a></li>
+                        <li><a href="./newarrivals.php">New Arrivals</a></li>
+                        <li><a href="./sales.php">On Sales</a></li>
                         <li class="dropdown">
-                            <a href="./products.html">Products</a>
+                            <a href="./products.php">Products</a>
                             <ul class="dropdown-content">
-                                <li><a href="./tops.html">Tops</a></li>
-                                <li><a href="./bottoms.html">Bottoms</a></li>
-                                <li><a href="./dresses.html">Dresses</a></li>
+                                <li><a href="./tops.php">Tops</a></li>
+                                <li><a href="./bottoms.php">Bottoms</a></li>
+                                <li><a href="./dresses.php">Dresses</a></li>
                             </ul>
                         </li>
                         <li>
-                            <form class="search-form" action="./search.html" method="post">
+                            <form class="search-form" action="./search.php" method="post">
                                 <input type="text" placeholder="Search" name="search" />
                                 <button type="submit">Go</button>
                             </form>
@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     </header>
     <div class="main_wrapper" style="padding: 80px 0px 65px 0px;">
         <div class="container">
-            <h1 style="margin: 0px 0px 20px 0px;text-align: center;">Create Product</h1>
+            <h1 style="margin: 0px 0px 20px 0px;text-align: center;">Update Product</h1>
             <form action="./handleupdateproduct.php" method="POST" id="productForm" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $product['Prodid']; ?>">
 
@@ -166,19 +166,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
                     <option value="0" <?php if ($product['isNew'] == 0) echo 'selected'; ?>>No</option>
                 </select>
 
-                <label for="issale">On Sale</label>
-                <select id="issale" name="issale" required>
-                    <option value="">Select Sale</option>
-                    <option value="1" <?php if ($product['isSale'] == 1) echo 'selected'; ?>>Yes</option>
-                    <option value="0" <?php if ($product['isSale'] == 0) echo 'selected'; ?>>No</option>
-                </select>
-
                 <label for="discount">Discount</label>
                 <input type="number" id="discount" name="discount" step="0.01" value="<?php echo $product['Discount']; ?>" required>
 
                 <label for="productImage">Product Image</label>
-                <img src="<?php echo $product['image_path']; ?>" alt="Product Image" width="100">
-                <input style="border-color: white;background-color: white; padding: 5px;" type="file" id="productImage" name="productImage" accept="image/*">
+                <img src="<?php echo $product['image_path']; ?>" alt="Product Image" width="100" style="margin-bottom: 10px;" title="<?php echo $product['image_path']; ?>">
+                
+                <input style="border-color: white;background-color: white; padding: 5px;" type="file" id="productImage" name="productImage" accept="image/*" required>
+                <input type="hidden" name="oldImage" value="<?php echo $product['image_path']; ?>">
 
                 <label for="description">Description</label>
                 <textarea id="description" name="description" required><?php echo $product['Description']; ?></textarea>
@@ -208,9 +203,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
                     <nav>
                         <ul>
                             <li><a href="./index.html">Home</a></li>
-                            <li><a href="./newarrivals.html">New Arrivals</a></li>
-                            <li><a href="./sales">On Sales</a></li>
-                            <li><a href="./products.html">Products</a></li>
+                            <li><a href="./newarrivals.php">New Arrivals</a></li>
+                            <li><a href="./sales.php">On Sales</a></li>
+                            <li><a href="./products.php">Products</a></li>
                         </ul>
                     </nav>
                 </div>

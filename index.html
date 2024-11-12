@@ -1,250 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <title>Vanwalk</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" type="text/css" href="./css/index.css" />
-  <link rel="stylesheet" type="text/css" href="./css/header-footer.css" />
-  <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <!-- Swiper JavaScript -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script>
-    // Initialize Swiper
-    document.addEventListener("DOMContentLoaded", function () {
-      var swiper = new Swiper(".swiper-container", {
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        loop: true, // Enable infinite loop
-        autoplay: {
-          delay: 5000, // Slide change interval
-        },
+  <head>
+    <title>Vanwalk</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+    <link rel="stylesheet" type="text/css" href="./css/header-footer.css" />
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+    <!-- Swiper JavaScript -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+      // Initialize Swiper
+      document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".swiper-container", {
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+          loop: true, // Enable infinite loop
+          autoplay: {
+            delay: 5000, // Slide change interval
+          },
+        });
       });
-    });
 
-    // Function to update the navigation bar
-    function updateNavBar() {
-      const isLogin = sessionStorage.getItem('isLogin');
-      const username = sessionStorage.getItem('username');
-      const isAdmin = sessionStorage.getItem('isAdmin');
+      // Function to update the navigation bar
+      function updateNavBar() {
+        const isLogin = sessionStorage.getItem("isLogin");
+        const username = sessionStorage.getItem("username");
+        const isAdmin = sessionStorage.getItem("isAdmin");
 
-      if (isLogin) {
-        document.getElementById('loginLink').style.display = 'none';
-        document.getElementById('usernameDisplay').textContent = `${username}`;
-        document.getElementById('userDD').style.display = 'block';
+        if (isLogin) {
+          document.getElementById("loginLink").style.display = "none";
+          document.getElementById(
+            "usernameDisplay"
+          ).textContent = `${username}`;
+          document.getElementById("userDD").style.display = "block";
+        }
       }
-    }
 
-    // Update the navigation bar when the page loads
-    window.addEventListener('load', updateNavBar);
-  </script>
-  <style>
-    /* Swiper Slider Styles */
-    .swiper_img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+      // Update the navigation bar when the page loads
+      window.addEventListener("load", updateNavBar);
+    </script>
+    <style>
+      /* Swiper Slider Styles */
+      .swiper_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-    /* Center Swiper navigation buttons */
-    .swiper-container {
-      position: relative;
-      /* Make the container position relative */
-    }
+      /* Center Swiper navigation buttons */
+      .swiper-container {
+        position: relative;
+        /* Make the container position relative */
+      }
 
-    .swiper-button-prev,
-    .swiper-button-next {
-      position: absolute;
-      /* Position the buttons absolutely */
-      top: 50%;
-      /* Center the buttons vertically */
-      transform: translateY(-50%);
-      /* Center the buttons vertically */
-      z-index: 10;
-      /* Make the buttons appear on top of other elements */
-      color: #d1e9f6;
-    }
+      .swiper-button-prev,
+      .swiper-button-next {
+        position: absolute;
+        /* Position the buttons absolutely */
+        top: 50%;
+        /* Center the buttons vertically */
+        transform: translateY(-50%);
+        /* Center the buttons vertically */
+        z-index: 10;
+        /* Make the buttons appear on top of other elements */
+        color: #d1e9f6;
+      }
 
-    .swiper-button-prev {
-      left: 40px;
-      /* Position the button to the left */
-    }
+      .swiper-button-prev {
+        left: 40px;
+        /* Position the button to the left */
+      }
 
-    .swiper-button-next {
-      right: 40px;
-      /* Position the button to the right */
-    }
+      .swiper-button-next {
+        right: 40px;
+        /* Position the button to the right */
+      }
 
-    /* Grid Styles */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
-    }
+      /* Grid Styles */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+      }
 
-    .grid-item {
-      position: relative;
-      overflow: hidden;
-    }
+      .grid-item {
+        position: relative;
+        overflow: hidden;
+      }
 
-    .grid-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+      .grid-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-    .grid-text {
-      position: absolute;
-      top: 85%;
-      left: 38%;
-      width: 20%;
-      padding: 10px;
-      color: black;
-      text-align: center;
-      /* background-color: transparent;
+      .grid-text {
+        position: absolute;
+        top: 85%;
+        left: 38%;
+        width: 20%;
+        padding: 10px;
+        color: black;
+        text-align: center;
+        /* background-color: transparent;
       border: 3px solid #d1e9f6; */
-      font-size: 24px;
-    }
+        font-size: 24px;
+      }
 
-    .grid-text:hover {
-      background-color: #d1e9f6;
-      color: black;
-    }
-  </style>
-</head>
+      .grid-text:hover {
+        background-color: #d1e9f6;
+        color: black;
+      }
+    </style>
+  </head>
 
-<body>
-  <header class="sticky-header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <a href="./index.html">
-            <img src="./public/logo.jpeg" alt="Vanwalk Logo" />
-          </a>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="./newarrivals.html">New Arrivals</a></li>
-            <li><a href="./sales.html">On Sales</a></li>
-            <li class="dropdown">
-              <a href="./products.html">Products</a>
-              <ul class="dropdown-content">
-                <li><a href="./tops.html">Tops</a></li>
-                <li><a href="./bottoms.html">Bottoms</a></li>
-                <li><a href="./dresses.html">Dresses</a></li>
-              </ul>
-            </li>
-            <li>
-              <form class="search-form" action="./search.html" method="post">
-                <input type="text" placeholder="Search" name="search" />
-                <button type="submit">Go</button>
-              </form>
-            </li>
-            <li><a href="./login.html" id="loginLink">Login</a></li>
-            <li class="dropdown" id="userDD">
-              <span id="usernameDisplay">Aphyo</span>
-              <ul class="dropdown-content">
-                <li><a href="./tops.html">Log Out</a></li>
-              </ul>
-            </li>
-            <li><a href="./cart.html">Cart</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
-  <div class="main_wrapper" style="padding: 0px 0px 50px 0px">
-    <div class="swiper-container">
-      <!-- Swiper slides -->
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <!-- Slide content -->
-          <img class="swiper_img" src="./public/slider1.jpg" alt="Image 1" />
-          <!-- <div class="slide-caption">Caption for Image 1</div> -->
-        </div>
-        <div class="swiper-slide">
-          <!-- Slide content -->
-          <img class="swiper_img" src="./public/slider1.jpg" alt="Image 2" />
-          <!-- <div class="slide-caption">Caption for Image 2</div> -->
-        </div>
-      </div>
-      <!-- Swiper navigation buttons -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
-    <div class="container" style="text-align: center;">
-      <h1>#SLAY THE DAY WITH SIMPLEST PEICE OF CLOTH!</h1>
-    </div>
-    <div class="grid-container">
-      <div class="grid-item">
-        <p style="text-align: center;">Elevate your style, from boardroom to weekend ease.</p>
-        <img class="grid-img" src="./public/top.jpg" alt="Grid Image 1" />
-        <a class="grid-text" href="./top.html"># Tops</a>
-      </div>
-      <div class="grid-item">
-        <p style="text-align: center;">Elevate your style, from boardroom to weekend ease.</p>
-        <img class="grid-img" src="./public/top.jpg" alt="Grid Image 2" />
-        <a class="grid-text" href="./top.html"># Bottoms</a>
-      </div>
-      <div class="grid-item">
-        <p style="text-align: center;">Elevate your style, from boardroom to weekend ease.</p>
-        <img class="grid-img" src="./public/top.jpg" alt="Grid Image 3" />
-        <a class="grid-text" href="./top.html"># Dresses</a>
-      </div>
-    </div>
-    <div class="container" style="text-align: center; margin: 80px 0px 50px;">
-      <h1>#VANWALK</h1>
-      <a href="./index.html" style="font-size: 20px; text-decoration: underline;">Follow us on Instagram!</a>
-    </div>
-  </div>
-  <footer class="sticky-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="contact-info">
-          <p><b>About Us</b></p>
-          <p>
-            Vanwalk offers an online shopping experience for clothing,<br />
-            featuring Tops, Bottoms, and Dresses. Users can browse, filter,<br />
-            and search for products, add items to a cart, and checkout. <br />
-            Registration and login are required for purchases, <br />
-            with receipts sent via email.
-          </p>
-        </div>
-        <div class="contact-info">
-          <p><b>SiteMaps</b></p>
+  <body>
+    <header class="sticky-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <a href="./index.html">
+              <img src="./public/logo.jpeg" alt="Vanwalk Logo" />
+            </a>
+          </div>
           <nav>
             <ul>
-              <li><a href="./index.html">Home</a></li>
-              <li><a href="./newarrivals.html">New Arrivals</a></li>
-              <li><a href="./sales">On Sales</a></li>
-              <li><a href="./products.html">Products</a></li>
+              <li><a href="./newarrivals.php">New Arrivals</a></li>
+              <li><a href="./sales.php">On Sales</a></li>
+              <li class="dropdown">
+                <a href="./products.php">Products</a>
+                <ul class="dropdown-content">
+                  <li><a href="./tops.php">Tops</a></li>
+                  <li><a href="./bottoms.php">Bottoms</a></li>
+                  <li><a href="./dresses.php">Dresses</a></li>
+                </ul>
+              </li>
+              <li>
+                <form class="search-form" action="./search.php" method="post">
+                  <input type="text" placeholder="Search" name="search" />
+                  <button type="submit">Go</button>
+                </form>
+              </li>
+              <li><a href="./login.html" id="loginLink">Login</a></li>
+              <li class="dropdown" id="userDD">
+                <span id="usernameDisplay">Aphyo</span>
+                <ul class="dropdown-content">
+                  <li><a href="./topss.php">Log Out</a></li>
+                </ul>
+              </li>
+              <li><a href="./cart.html">Cart</a></li>
             </ul>
           </nav>
         </div>
-        <div class="contact-info">
-          <p><b>Contact Info</b></p>
-          <p>
-            <b>Address:</b> 44 Pekin Street #02-01 Far East Square,
-            Singapore<br />
-            <b>Telephone:</b> +65 62255366<br />
-            <b>Email:</b>
-            <a href="mailto:vanwalk@gmail.com" style="color: black">vanwalk@gmail.com</a>
+      </div>
+    </header>
+    <div class="main_wrapper" style="padding: 0px 0px 50px 0px">
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img class="swiper_img" src="./public/slider1.png" alt="Image 1" />
+          </div>
+          <!-- <div class="swiper-slide">
+          <img class="swiper_img" src="./public/slider1.png" alt="Image 2" />
+        </div> -->
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+      <div class="container" style="text-align: center">
+        <h1>#SLAY THE DAY WITH SIMPLEST PEICE OF CLOTH!</h1>
+      </div>
+      <div class="grid-container">
+        <div class="grid-item">
+          <p style="text-align: center">
+            Elevate your style, from boardroom to weekend ease.
           </p>
+          <img class="grid-img" src="./public/top.jpg" alt="Grid Image 1" />
+          <a class="grid-text" href="./tops.php"># Tops</a>
+        </div>
+        <div class="grid-item">
+          <p style="text-align: center">
+            Elevate your style, from boardroom to weekend ease.
+          </p>
+          <img class="grid-img" src="./public/bottom.jpg" alt="Grid Image 2" />
+          <a class="grid-text" href="./bottoms.php"># Bottoms</a>
+        </div>
+        <div class="grid-item">
+          <p style="text-align: center">
+            Elevate your style, from boardroom to weekend ease.
+          </p>
+          <img class="grid-img" src="./public/dress.jpg" alt="Grid Image 3" />
+          <a class="grid-text" href="./dresses.php"># Dresses</a>
         </div>
       </div>
-      <p style="
+      <div class="container" style="text-align: center; margin: 80px 0px 50px">
+        <h1>#VANWALK</h1>
+        <a
+          href="./index.html"
+          style="font-size: 20px; text-decoration: underline"
+          >Follow us on Instagram!</a
+        >
+      </div>
+    </div>
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="contact-info">
+            <p><b>About Us</b></p>
+            <p>
+              Vanwalk offers an online shopping experience for clothing,<br />
+              featuring Tops, Bottoms, and Dresses. Users can browse, filter,<br />
+              and search for products, add items to a cart, and checkout. <br />
+              Registration and login are required for purchases, <br />
+              with receipts sent via email.
+            </p>
+          </div>
+          <div class="contact-info">
+            <p><b>SiteMaps</b></p>
+            <nav>
+              <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./newarrivals.php">New Arrivals</a></li>
+                <li><a href="./sales.php">On Sales</a></li>
+                <li><a href="./products.php">Products</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="contact-info">
+            <p><b>Contact Info</b></p>
+            <p>
+              <b>Address:</b> 44 Pekin Street #02-01 Far East Square,
+              Singapore<br />
+              <b>Telephone:</b> +65 62255366<br />
+              <b>Email:</b>
+              <a href="mailto:vanwalk@gmail.com" style="color: black"
+                >vanwalk@gmail.com</a
+              >
+            </p>
+          </div>
+        </div>
+        <p
+          style="
             text-align: center;
             border-top: 1px solid rgba(0, 0, 0, 0.253);
             padding: 20px 0px 0px 0px;
             margin-bottom: 0px;
-          ">
-        &copy; 2023 Vanwalk. All rights reserved.
-      </p>
-    </div>
-  </footer>
-</body>
-
+          "
+        >
+          &copy; 2023 Vanwalk. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>

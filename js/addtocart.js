@@ -19,8 +19,6 @@ function addToCart(event) {
 
   const imgsrc = imgsrcInput.textContent.trim();
 
-  console.log(imgsrc)
-
   const name = nameInput.textContent.trim();
   const price = parseFloat(priceInput.textContent.trim().replace("$", ""));
   const color = colorInput.value;

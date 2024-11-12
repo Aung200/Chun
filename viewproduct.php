@@ -107,18 +107,18 @@ mysqli_close($conn);
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="./newarrivals.html">New Arrivals</a></li>
-                        <li><a href="./sales.html">On Sales</a></li>
+                        <li><a href="./newarrivals.php">New Arrivals</a></li>
+                        <li><a href="./sales.php">On Sales</a></li>
                         <li class="dropdown">
-                            <a href="./products.html">Products</a>
+                            <a href="./products.php">Products</a>
                             <ul class="dropdown-content">
-                                <li><a href="./tops.html">Tops</a></li>
-                                <li><a href="./bottoms.html">Bottoms</a></li>
-                                <li><a href="./dresses.html">Dresses</a></li>
+                                <li><a href="./tops.php">Tops</a></li>
+                                <li><a href="./bottoms.php">Bottoms</a></li>
+                                <li><a href="./dresses.php">Dresses</a></li>
                             </ul>
                         </li>
                         <li>
-                            <form class="search-form" action="./search.html" method="post">
+                            <form class="search-form" action="./search.php" method="post">
                                 <input type="text" placeholder="Search" name="search" />
                                 <button type="submit">Go</button>
                             </form>
@@ -146,7 +146,6 @@ mysqli_close($conn);
                         <th>Color</th>
                         <th>Quantity</th>
                         <th>Is New</th>
-                        <th>On Sale</th>
                         <th>Discount (%)</th>
                         <th></th>
                     </tr>
@@ -162,11 +161,11 @@ mysqli_close($conn);
                                 <td><?php echo $row['Color']; ?></td>
                                 <td><?php echo $row['qty']; ?></td>
                                 <td><?php echo $row['isNew'] ? 'Yes' : 'No'; ?></td>
-                                <td><?php echo $row['isSale'] ? 'Yes' : 'No'; ?></td>
                                 <td><?php echo $row['Discount'] . "%"; ?></td>
                                 <td style="width: 80px;">
                                     <div class="edt-btn-group">
                                         <form method="post" action="./deleteproduct.php" class="actionform">
+                                            <input type="hidden" name="id" value="<?php echo $row['Prodid']; ?>">
                                             <button class="fabutton" type="submit">Delete</button>
                                         </form>
                                         <form method="post" action="./updateproduct.php" class="actionform">
@@ -205,9 +204,9 @@ mysqli_close($conn);
                     <nav>
                         <ul>
                             <li><a href="./index.html">Home</a></li>
-                            <li><a href="./newarrivals.html">New Arrivals</a></li>
-                            <li><a href="./sales">On Sales</a></li>
-                            <li><a href="./products.html">Products</a></li>
+                            <li><a href="./newarrivals.php">New Arrivals</a></li>
+                            <li><a href="./sales.php">On Sales</a></li>
+                            <li><a href="./products.php">Products</a></li>
                         </ul>
                     </nav>
                 </div>

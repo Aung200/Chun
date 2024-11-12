@@ -81,7 +81,6 @@ $productTableQuery = "CREATE TABLE Product (
     Color VARCHAR(50) NOT NULL,
     Description LONGTEXT NOT NULL,
     qty INT(11) NOT NULL,
-    isSale BOOLEAN NOT NULL,
     Discount FLOAT NOT NULL,
     isNew BOOLEAN NOT NULL,
     created_datetime DATETIME NOT NULL,

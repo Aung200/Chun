@@ -76,18 +76,18 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="./newarrivals.html">New Arrivals</a></li>
-                        <li><a href="./sales.html">On Sales</a></li>
+                        <li><a href="./newarrivals.php">New Arrivals</a></li>
+                        <li><a href="./sales.php">On Sales</a></li>
                         <li class="dropdown">
-                            <a href="./products.html">Products</a>
+                            <a href="./products.php">Products</a>
                             <ul class="dropdown-content">
-                                <li><a href="./tops.html">Tops</a></li>
-                                <li><a href="./bottoms.html">Bottoms</a></li>
-                                <li><a href="./dresses.html">Dresses</a></li>
+                                <li><a href="./tops.php">Tops</a></li>
+                                <li><a href="./bottoms.php">Bottoms</a></li>
+                                <li><a href="./dresses.php">Dresses</a></li>
                             </ul>
                         </li>
                         <li>
-                            <form class="search-form" action="./search.html" method="post">
+                            <form class="search-form" action="./search.php" method="post">
                                 <input type="text" placeholder="Search" name="search" />
                                 <button type="submit">Go</button>
                             </form>
@@ -137,13 +137,6 @@
                     <option value=0>No</option>
                 </select>
 
-                <label for="type">OnSale</label>
-                <select id="type" name="issale" required>
-                    <option value="">Select Sale</option>
-                    <option value=1>Yes</option>
-                    <option value=0>No</option>
-                </select>
-
                 <label for="discount">Discount</label>
                 <input type="number" id="discount" name="discount" step="0.01" required>
 
@@ -178,9 +171,9 @@
                     <nav>
                         <ul>
                             <li><a href="./index.html">Home</a></li>
-                            <li><a href="./newarrivals.html">New Arrivals</a></li>
-                            <li><a href="./sales">On Sales</a></li>
-                            <li><a href="./products.html">Products</a></li>
+                            <li><a href="./newarrivals.php">New Arrivals</a></li>
+                            <li><a href="./sales.php">On Sales</a></li>
+                            <li><a href="./products.php">Products</a></li>
                         </ul>
                     </nav>
                 </div>
