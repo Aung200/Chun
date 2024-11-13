@@ -96,49 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     <?php include 'header.php'; ?>
     <div class="main_wrapper" style="padding: 80px 0px 65px 0px;">
         <div class="container">
-            <h1 style="margin: 0px 0px 20px 0px;text-align: center;">Update Product</h1>
-            <form action="./handleupdateproduct.php" method="POST" id="productForm" enctype="multipart/form-data">
+            <h1 style="margin: 0px 0px 20px 0px;text-align: center;">Update Product Image</h1>
+            <form action="./handleupdateimage.php" method="POST" id="productForm" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $product['Prodid']; ?>">
+                <label for="productImage">Old Product Image : </label>
+                <?php
+                $imageFileName = basename($product['image_path']);
+                ?>
+                <span style="margin-bottom: 10px;"><?php echo $imageFileName; ?></span>
+                <img src="<?php echo $product['image_path']; ?>" alt="Product Image" width="100" style="margin-bottom: 10px;" title="<?php echo $product['image_path']; ?>">
 
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" value="<?php echo $product['Name']; ?>" required>
-
-                <label for="price">Price</label>
-                <input type="number" id="price" name="price" step="0.01" value="<?php echo $product['Price']; ?>" required>
-
-                <label for="type">Type</label>
-                <select id="type" name="type" required>
-                    <option value="">Select type</option>
-                    <option value="top" <?php if ($product['Type'] == 'top') echo 'selected'; ?>>Top</option>
-                    <option value="bottom" <?php if ($product['Type'] == 'bottom') echo 'selected'; ?>>Bottom</option>
-                    <option value="dress" <?php if ($product['Type'] == 'dress') echo 'selected'; ?>>Dress</option>
-                </select>
-
-                <label for="color">Color</label>
-                <select id="color" name="color" required>
-                    <option value="">Select color</option>
-                    <option value="red" <?php if ($product['Color'] == 'red') echo 'selected'; ?>>Red</option>
-                    <option value="blue" <?php if ($product['Color'] == 'blue') echo 'selected'; ?>>Blue</option>
-                    <option value="black" <?php if ($product['Color'] == 'black') echo 'selected'; ?>>Black</option>
-                    <option value="white" <?php if ($product['Color'] == 'white') echo 'selected'; ?>>White</option>
-                    <option value="pink" <?php if ($product['Color'] == 'pink') echo 'selected'; ?>>Pink</option>
-                </select>
-
-                <label for="qty">Quantity</label>
-                <input type="number" id="qty" name="qty" value="<?php echo $product['qty']; ?>" required>
-
-                <label for="isnew">Is New</label>
-                <select id="isnew" name="isnew" required>
-                    <option value="">Select New</option>
-                    <option value="1" <?php if ($product['isNew'] == 1) echo 'selected'; ?>>Yes</option>
-                    <option value="0" <?php if ($product['isNew'] == 0) echo 'selected'; ?>>No</option>
-                </select>
-
-                <label for="discount">Discount</label>
-                <input type="number" id="discount" name="discount" step="0.01" value="<?php echo $product['Discount']; ?>" required>
-
-                <label for="description">Description</label>
-                <textarea id="description" name="description" required><?php echo $product['Description']; ?></textarea>
+                <input style="border-color: white;background-color: white; padding: 5px;" type="file" id="productImage" name="productImage" accept="image/*" required>
+                <input type="hidden" name="oldImage" value="<?php echo $product['image_path']; ?>">
 
                 <button type="submit">Update</button>
             </form>
@@ -149,5 +118,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     </div>
     <?php include 'footer.php'; ?>
 </body>
-
-</html>

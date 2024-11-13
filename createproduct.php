@@ -66,39 +66,7 @@
 </head>
 
 <body>
-    <header class="sticky-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <a href="./index.html">
-                        <img src="./public/logo.jpeg" alt="Vanwalk Logo" />
-                    </a>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="./newarrivals.php">New Arrivals</a></li>
-                        <li><a href="./sales.php">On Sales</a></li>
-                        <li class="dropdown">
-                            <a href="./products.php">Products</a>
-                            <ul class="dropdown-content">
-                                <li><a href="./tops.php">Tops</a></li>
-                                <li><a href="./bottoms.php">Bottoms</a></li>
-                                <li><a href="./dresses.php">Dresses</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <form class="search-form" action="./search.php" method="post">
-                                <input type="text" placeholder="Search" name="search" />
-                                <button type="submit">Go</button>
-                            </form>
-                        </li>
-                        <li><a href="./login.html">Login</a></li>
-                        <li><a href="./cart.html">Cart</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <?php include 'header.php'; ?>
     <div class="main_wrapper" style="padding: 80px 0px 65px 0px;">
         <div class="container">
             <h1 style="margin: 0px 0px 20px 0px;text-align: center;">Create Product</h1>
@@ -153,51 +121,7 @@
             </form>
         </div>
     </div>
-    <footer class="sticky-footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="contact-info">
-                    <p><b>About Us</b></p>
-                    <p>
-                        Vanwalk offers an online shopping experience for clothing,<br />
-                        featuring Tops, Bottoms, and Dresses. Users can browse, filter,<br />
-                        and search for products, add items to a cart, and checkout. <br />
-                        Registration and login are required for purchases, <br />
-                        with receipts sent via email.
-                    </p>
-                </div>
-                <div class="contact-info">
-                    <p><b>SiteMaps</b></p>
-                    <nav>
-                        <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li><a href="./newarrivals.php">New Arrivals</a></li>
-                            <li><a href="./sales.php">On Sales</a></li>
-                            <li><a href="./products.php">Products</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="contact-info">
-                    <p><b>Contact Info</b></p>
-                    <p>
-                        <b>Address:</b> 44 Pekin Street #02-01 Far East Square,
-                        Singapore<br />
-                        <b>Telephone:</b> +65 62255366<br />
-                        <b>Email:</b>
-                        <a href="mailto:vanwalk@gmail.com" style="color: black">vanwalk@gmail.com</a>
-                    </p>
-                </div>
-            </div>
-            <p style="
-            text-align: center;
-            border-top: 1px solid rgba(0, 0, 0, 0.253);
-            padding: 20px 0px 0px 0px;
-            margin-bottom: 0px;
-          ">
-                &copy; 2023 Vanwalk. All rights reserved.
-            </p>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

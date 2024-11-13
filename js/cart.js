@@ -1,4 +1,3 @@
-// Function to update the cart UI
 function updateCart() {
   const cartItemsElement = document.getElementById("cart-items");
   cartItemsElement.innerHTML = "";
@@ -7,6 +6,7 @@ function updateCart() {
 
   // Retrieve the cart data from sessionStorage
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  const maxqty = JSON.parse(sessionStorage.getItem("maxqty")) || 10;
 
   cart.forEach((product) => {
     const cartItemElement = document.createElement("div");
@@ -18,21 +18,21 @@ function updateCart() {
         <p class="cart-item-details-p"><b>Size :</b> <span style="text-transform: uppercase;">${product.size}</span></p>
         <p class="cart-item-details-p"><b>Color :</b> <span style="text-transform: uppercase;">${product.color}</span></p>
       </div>
-      <p>$${product.price}</p>
+      <p>$${product.disprice}</p>
       <div class="quantity-controls">
-        <button onclick="changeQuantity(${product.cid}, -1)">-</button>
+        <button onclick="changeQuantity(${product.cid}, -1)" ${product.qty == 1 ? 'disabled' : ''}>-</button>
         <p class="cart-item-details-p">${product.qty}</p>
-        <button onclick="changeQuantity(${product.cid}, 1)">+</button>
+        <button onclick="changeQuantity(${product.cid}, 1)" ${product.qty >= product.maxqty ? 'disabled' : ''}>+</button>
       </div>
-      <p>Total: $${product.price * product.qty}</p>
+      <p>Total: $${(product.disprice * product.qty).toFixed(2)}</p>
       <button onclick="removeFromCart(${product.cid})">Remove</button>
     `;
     cartItemsElement.appendChild(cartItemElement);
 
-    totalPrice += product.price * product.qty;
+    totalPrice += product.disprice * product.qty;
   });
 
-  document.getElementById("total-price").textContent = `$${totalPrice}`;
+  document.getElementById("total-price").textContent = `$${totalPrice.toFixed(2)}`;
 }
 
 // Function to change the quantity of a product
@@ -43,7 +43,7 @@ function changeQuantity(productId, change) {
   // Find the product and update its quantity
   cart = cart.map((product) => {
     if (product.cid === productId) {
-      product.qty = Math.max(1, Math.min(5, product.qty + change));
+      product.qty = Math.max(1, Math.min(10, product.qty + change));
     }
     return product;
   });
@@ -54,6 +54,7 @@ function changeQuantity(productId, change) {
   // Update the cart UI
   updateCart();
 }
+
 
 // Function to remove a product from the cart
 function removeFromCart(productId) {
@@ -69,6 +70,7 @@ function removeFromCart(productId) {
   // Update the cart UI
   updateCart();
 }
+
 
 // Initial cart update
 window.addEventListener("load", updateCart);

@@ -33,6 +33,7 @@ button {
   font-weight: bold;
   color: black;
   border-radius: 4px;
+  font-family: 'Amaranth', sans-serif;
   cursor: pointer;
 }
 

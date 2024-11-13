@@ -28,6 +28,7 @@ if ($prodid > 0) {
     $price = number_format($row['Price'], 2);
     $description = htmlspecialchars($row['Description']);
     $color = htmlspecialchars($row['Color']);
+    $qty = $row['qty'];
     $discount = $row['Discount'];
     $discountedPrice = $discount > 0 ? number_format($row['Price'] * (1 - $discount / 100), 2) : null;
   } else {
@@ -79,7 +80,6 @@ mysqli_close($conn);
       flex-direction: column;
     }
 
-    #color,
     #size,
     #qty {
       margin: 10px 0px;
@@ -110,39 +110,7 @@ mysqli_close($conn);
 </head>
 
 <body>
-  <header class="sticky-header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <a href="./index.html">
-            <img src="./public/logo.jpeg" alt="Vanwalk Logo" />
-          </a>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="./newarrivals.php">New Arrivals</a></li>
-            <li><a href="./sales.php">On Sales</a></li>
-            <li class="dropdown">
-              <a href="./products.php">Products</a>
-              <ul class="dropdown-content">
-                <li><a href="./tops.php">Tops</a></li>
-                <li><a href="./bottoms.php">Bottoms</a></li>
-                <li><a href="./dresses.php">Dresses</a></li>
-              </ul>
-            </li>
-            <li>
-              <form class="search-form" action="./search.php" method="post">
-                <input type="text" placeholder="Search" name="search" />
-                <button type="submit">Go</button>
-              </form>
-            </li>
-            <li><a href="./login.html">Login</a></li>
-            <li><a href="./cart.html">Cart</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
+  <?php include 'header.php'; ?>
   <div class="main_wrapper" style="padding: 50px 0px 50px 0px">
     <div class="container">
       <div class="productdetails-container">
@@ -155,17 +123,19 @@ mysqli_close($conn);
           <div class="product-details">
             <form class="add-to-cart-form" onsubmit="addToCart(event)">
               <span id="imgsrc" hidden><?php echo $imagePath; ?></span>
+              <span id="discount" hidden><?php echo $discount; ?></span>
               <h1 id="name"><?php echo $name; ?></h1>
-              <p style="font-weight: bold;margin: 0px;" id="price">
+              <span id="id" hidden><?php echo $prodid; ?></span>
+              <p style="font-weight: bold;margin: 0px;">
                 <?php if ($discountedPrice): ?>
-                  <span style="text-decoration: line-through; color: #A9A9A9; padding-right: 10px;">$<?php echo $price; ?></span>
-                  <span>$<?php echo $discountedPrice; ?></span>
+                  <span style="text-decoration: line-through; color: #A9A9A9; padding-right: 10px;" id="price">$<?php echo $price; ?></span>
+                  <span id="disprice">$<?php echo $discountedPrice; ?></span>
                 <?php else: ?>
                   $<?php echo $price; ?>
                 <?php endif; ?>
               </p>
               <p style="margin-bottom: 50px;"><?php echo $description; ?></p>
-              <label for="color" style="margin-bottom: 18px;">Color: <?php echo $color; ?></label>
+              <label for="color" style="margin-bottom: 18px;">Color: <span id="color" style="text-transform: uppercase;"><?php echo $color; ?></span></label>
               <label for="size">Size:</label>
               <select id="size">
                 <option value="xs">XS</option>
@@ -174,19 +144,20 @@ mysqli_close($conn);
                 <option value="l">L</option>
               </select>
               <label for="qty">Quantity:</label>
+              <label id="maxqty" hidden><?php echo $qty; ?></label>
               <select id="qty">
-                <?php if ($row['qty'] == 0): ?>
+                <?php if ($qty == 0): ?>
                   <option value="0">0</option>
                 <?php else: ?>
                   <?php
-                  $maxQty = min($row['qty'], 10); // Maximum 10 or available quantity
+                  $maxQty = min($qty, 10); // Maximum 10 or available quantity
                   for ($i = 1; $i <= $maxQty; $i++) {
                     echo "<option value=\"$i\">$i</option>";
                   }
                   ?>
                 <?php endif; ?>
               </select>
-              <?php if ($row['qty'] == 0): ?>
+              <?php if ($qty == 0): ?>
                 <button class="cart_btn sold-out" type="submit" disabled>Sold Out</button>
               <?php else: ?>
                 <button class="cart_btn" type="submit">Add to Cart</button>
@@ -197,52 +168,7 @@ mysqli_close($conn);
       </div>
     </div>
   </div>
-  <footer class="sticky-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="contact-info">
-          <p><b>About Us</b></p>
-          <p>
-            Vanwalk offers an online shopping experience for clothing,<br />
-            featuring Tops, Bottoms, and Dresses. Users can browse, filter,<br />
-            and search for products, add items to a cart, and checkout. <br />
-            Registration and login are required for purchases, <br />
-            with receipts sent via email.
-          </p>
-        </div>
-        <div class="contact-info">
-          <p><b>SiteMaps</b></p>
-          <nav>
-            <ul>
-              <li><a href="./index.html">Home</a></li>
-              <li><a href="./newarrivals.php">New Arrivals</a></li>
-              <li><a href="./sales.php">On Sales</a></li>
-              <li><a href="./products.php">Products</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="contact-info">
-          <p><b>Contact Info</b></p>
-          <p>
-            <b>Address:</b> 44 Pekin Street #02-01 Far East Square,
-            Singapore<br />
-            <b>Telephone:</b> +65 62255366<br />
-            <b>Email:</b>
-            <a href="mailto:vanwalk@gmail.com" style="color: black">vanwalk@gmail.com</a>
-          </p>
-        </div>
-      </div>
-      <p
-        style="
-            text-align: center;
-            border-top: 1px solid rgba(0, 0, 0, 0.253);
-            padding: 20px 0px 0px 0px;
-            margin-bottom: 0px;
-          ">
-        &copy; 2023 Vanwalk. All rights reserved.
-      </p>
-    </div>
-  </footer>
+  <?php include 'footer.php'; ?>
 </body>
 
 </html>
