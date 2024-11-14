@@ -1,4 +1,12 @@
 <?php
+
+session_start();
+// Redirect to unauthorize page if not an admin/or not log in 
+if (!isset($_SESSION['islogin']) || (isset($_SESSION['isadmin']) && $_SESSION['isadmin'] === 0)) {
+    header('Location: unauthorize.php');
+    exit();
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";

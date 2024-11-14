@@ -80,7 +80,6 @@ mysqli_close($conn);
       flex-direction: column;
     }
 
-    #size,
     #qty {
       margin: 10px 0px;
       width: 100px;
@@ -136,13 +135,7 @@ mysqli_close($conn);
               </p>
               <p style="margin-bottom: 50px;"><?php echo $description; ?></p>
               <label for="color" style="margin-bottom: 18px;">Color: <span id="color" style="text-transform: uppercase;"><?php echo $color; ?></span></label>
-              <label for="size">Size:</label>
-              <select id="size">
-                <option value="xs">XS</option>
-                <option value="s">S</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
-              </select>
+              <label for="size" style="margin-bottom: 18px;" id="size" >Size: Free</label>
               <label for="qty">Quantity:</label>
               <label id="maxqty" hidden><?php echo $qty; ?></label>
               <select id="qty">

@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+// Redirect to unauthorize page if not an admin/or not log in 
+if (!isset($_SESSION['islogin']) || (isset($_SESSION['isadmin']) && $_SESSION['isadmin'] === 0)) {
+    header('Location: unauthorize.php');
+    exit();
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +23,7 @@
             border: 1px solid #ccc;
             width: 300px;
             margin: 0 auto;
-            padding: 30px; 
+            padding: 30px;
             display: flex;
             flex-direction: column;
             background-color: #eecad5;
@@ -42,7 +54,8 @@
             margin-bottom: 10px;
         }
 
-        #productForm button, #backform button{
+        #productForm button,
+        #backform button {
             padding: 8px;
             color: black;
             margin-top: 15px;
@@ -51,17 +64,16 @@
             width: fit-content;
         }
 
-        #backform{
+        #backform {
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        #backform button{
+        #backform button {
             width: fit-content;
             margin-top: 60px;
         }
-
     </style>
 </head>
 

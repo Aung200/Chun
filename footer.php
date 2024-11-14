@@ -19,7 +19,7 @@
                     <p><b>SiteMaps</b></p>
                     <nav>
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./index.php">Home</a></li>
                             <li><a href="./newarrivals.php">New Arrivals</a></li>
                             <li><a href="./sales.php">On Sales</a></li>
                             <li><a href="./products.php">Products</a></li>

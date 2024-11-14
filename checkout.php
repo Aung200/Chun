@@ -1,3 +1,42 @@
+<?php
+session_start();
+
+// Store the current page in session for later redirection
+$_SESSION['redirect_after_login'] = 'checkout.php';
+
+// Redirect to login page if not logged in
+if (!isset($_SESSION['islogin'])) {
+    header('Location: login.php');
+    exit();
+}
+
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "vanwalk";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$userid = $_SESSION['userid'];
+
+$sql = "SELECT Username, Email FROM User WHERE Userid = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userid);
+$stmt->execute();
+$stmt->bind_result($username, $email);
+$stmt->fetch();
+$stmt->close();
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -88,7 +127,8 @@
 
         .subtotal,
         .total,
-        .shipping, .discountp {
+        .shipping,
+        .discountp {
             margin: 0px 0px 10px auto;
         }
 
@@ -157,7 +197,7 @@
                             <p>Qty : ${product.qty}</p>
                         </div>
                         <p style="margin: auto 50px auto auto;color: #a9a9a9; text-decoration: line-through;">
-                            $${(product.price*product.qty).toFixed(2)} 
+                            $${(product.price*product.qty).toFixed(2)}
                         </p>
                         <p class="discount-price">$${(product.disprice*product.qty).toFixed(2)}</p>
                     `;
@@ -174,8 +214,19 @@
             }
 
             populateProductInfo();
+
+            // Add event listener to form submit
+            document.getElementById('checkout-form').addEventListener('submit', function(event) {
+                const cartItems = JSON.stringify(JSON.parse(sessionStorage.getItem('cart')) || []);
+                const cartInput = document.createElement('input');
+                cartInput.type = 'hidden';
+                cartInput.name = 'cart_items';
+                cartInput.value = cartItems;
+                this.appendChild(cartInput);
+            });
         });
     </script>
+
 </head>
 
 <body>
@@ -183,21 +234,22 @@
     <div class="main_wrapper" style="padding: 80px 0px">
         <div class="container checkout">
             <h1 style="text-align: center; margin-bottom: 50px;">Checkout</h1>
-
-            <form onsubmit="alert('Order completed!');" id="checkout-form">
+            <form action="./handlecheckout.php" method="post" id="checkout-form">
                 <div class="row">
                     <div class="user-form">
                         <h2 style="padding: 0px 0px 30px 0px; margin: 0px;">User Details</h2>
+                        <span id="userid" hidden><?php echo $userid; ?></span>
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" value="<?php echo $username; ?>" required>
 
                         <label for="email">Email Address:</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
 
                         <label for="address">Address:</label>
                         <input type="text" id="address" name="address" required>
 
                         <label for="phone">Phone Number:</label>
                         <input type="tel" id="phone" name="phone" required>
-
                     </div>
                     <div class="user-form product-info">
                         <h2 class="productinfo-h2">Product Information</h2>

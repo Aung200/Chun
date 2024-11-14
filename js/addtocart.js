@@ -27,28 +27,35 @@ function addToCart(event) {
   const id = idInput.textContent.trim();
   const price = parseFloat(priceInput.textContent.trim().replace("$", ""));
   const disprice = parseFloat(dispriceInput.textContent.trim().replace("$", ""));
-  const color = colorInput.textContent;
-  const size = sizeInput.value;
+  const color = colorInput.textContent.trim();
+  const size = sizeInput.textContent.trim();
   const qty = parseInt(qtyInput.value);
-  const maxqty = parseInt(maxqtyInput.textContent);
-  
+  const maxqty = parseInt(maxqtyInput.textContent.trim());
+
   if (isNaN(qty)) {
     alert('Please enter a valid quantity.');
     return;
   }
 
   if (!color || !size || qty <= 0 || qty > 10) {
-    alert('Please select a color, size, and quantity between 1 and 5.');
+    alert('Please select a color, size, and quantity between 1 and 10.');
+    return;
+  }
+
+  // Check if the product is already in the cart
+  const existingProduct = cart.find(product => product.id === id);
+  if (existingProduct) {
+    alert('This item is already in the cart.');
     return;
   }
 
   const product = {
     cid: generateUniqueId(),
-    img : imgsrc,
-    discount : discount,
+    img: imgsrc,
+    discount: discount,
     name: name,
-    id : id,
-    price: price, 
+    id: id,
+    price: price,
     disprice: disprice,
     color: color,
     size: size,

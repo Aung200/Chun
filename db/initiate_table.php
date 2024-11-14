@@ -56,15 +56,17 @@ function generateUniqueId($conn, $tableName, $columnName) {
 $userTableQuery = "CREATE TABLE User (
     Userid CHAR(3) NOT NULL PRIMARY KEY,
     Username VARCHAR(50) NOT NULL,
-    Password VARCHAR(30) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
     Email VARCHAR(100) NOT NULL,
     isadmin BOOLEAN NOT NULL
 )";
 if (checkAndCreateTable($conn, 'User', $userTableQuery)) {
     // Insert admin and user accounts into User table
     $gId = generateUniqueId($conn, 'User', 'Userid');
+    // Hash the password for security
+    $hashed_password = password_hash('admin1234', PASSWORD_DEFAULT);
     $adminInsertQuery = "INSERT INTO User (Userid, Username, Password, Email, isadmin) VALUES 
-        ('$gId', 'admin', 'admin1234', 'admin@gmail.com', true)";
+        ('$gId', 'admin', '$hashed_password', 'admin@gmail.com', 1)";
     if (mysqli_query($conn, $adminInsertQuery)) {
         echo "Admin and user accounts created successfully <br>";
     } else {
