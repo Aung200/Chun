@@ -77,8 +77,8 @@
     .grid-text {
       position: absolute;
       top: 85%;
-      left: 38%;
-      width: 20%;
+      left: 20%;
+      width: 50%;
       padding: 10px;
       color: black;
       text-align: center;

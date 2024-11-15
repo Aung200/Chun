@@ -29,9 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // Check if passwords match
   if ($password !== $confirm_password) {
     echo "<script>
-                alert('Passwords do not match.');
-                window.location.href = 'register.php';
-              </script>";
+                    alert('Passwords do not match.');
+                    window.location.href = 'register.php';
+                  </script>";
+    exit();
+  }
+
+  // Check if the username or email already exists
+  $check_query = "SELECT * FROM User WHERE Username='$name' OR Email='$email'";
+  $result = mysqli_query($conn, $check_query);
+
+  if (mysqli_num_rows($result) > 0) {
+    echo "<script>
+                    alert('Username or Email already exists.');
+                    window.location.href = 'register.php';
+                  </script>";
     exit();
   }
 
@@ -66,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     unset($_SESSION['redirect_after_login']); // Clear the redirect session variable
 
     echo "<script>
-                window.location.href = '$redirect_page';
-              </script>";
+                    window.location.href = '$redirect_page';
+                  </script>";
     exit();
   } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -76,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 mysqli_close($conn);
 ?>
+
 
 
 <!DOCTYPE html>

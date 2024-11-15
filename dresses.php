@@ -12,7 +12,7 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-$search = isset($_POST['search']) ? $_POST['search'] : (isset($_GET['search']) ? $_GET['search'] : '');
+$search = isset($_POST['search']) ? $_POST['search'] : '';
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'LTH';
 $color = isset($_GET['color']) ? $_GET['color'] : 'all';
 
@@ -77,9 +77,12 @@ if (isset($_GET['ajax'])) {
   } else {
     echo '<p>No products found.</p>';
   }
+  // Close connection only if it's an AJAX request
   mysqli_close($conn);
+  exit; // Exit to prevent the rest of the page from rendering
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -175,7 +178,6 @@ if (isset($_GET['ajax'])) {
         } else {
           echo '<p>No products found.</p>';
         }
-        mysqli_close($conn);
         ?>
       </div>
     </div>

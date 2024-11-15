@@ -33,6 +33,14 @@ function updateCart() {
   });
 
   document.getElementById("total-price").textContent = `$${totalPrice.toFixed(2)}`;
+
+  // Disable the checkout button if the cart is empty
+  const checkoutButton = document.querySelector("form[action='./checkout.php'] button");
+  if (cart.length === 0) {
+    checkoutButton.disabled = true;
+  } else {
+    checkoutButton.disabled = false;
+  }
 }
 
 // Function to change the quantity of a product
@@ -55,7 +63,6 @@ function changeQuantity(productId, change) {
   updateCart();
 }
 
-
 // Function to remove a product from the cart
 function removeFromCart(productId) {
   // Retrieve the cart data from sessionStorage
@@ -71,7 +78,5 @@ function removeFromCart(productId) {
   updateCart();
 }
 
-
 // Initial cart update
 window.addEventListener("load", updateCart);
-

@@ -20,7 +20,7 @@ if (!$conn) {
 }
 
 // Fetch products
-$sql = "SELECT * FROM Product";
+$sql = "SELECT * FROM Product ORDER BY Name ASC";
 $result = mysqli_query($conn, $sql);
 
 mysqli_close($conn);

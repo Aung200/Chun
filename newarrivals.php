@@ -12,7 +12,7 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-$search = isset($_POST['search']) ? $_POST['search'] : (isset($_GET['search']) ? $_GET['search'] : '');
+$search = isset($_POST['search']) ? $_POST['search'] : '';
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'LTH';
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $color = isset($_GET['color']) ? $_GET['color'] : 'all';
@@ -55,12 +55,15 @@ $result = mysqli_query($conn, $sql);
 if (isset($_GET['ajax'])) {
   if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
+      if ($row['qty'] == 0) {
+        continue; // Skip products with zero quantity
+      }
       echo '<form class="product-item" action="./productdetails.php" method="post">';
       echo '<input type="hidden" name="id" value="' . $row['Prodid'] . '">';
       $opacity = $row['qty'] == 0 ? '0.25' : '1.0';
       echo '<img src="' . $row['image_path'] . '" alt="' . htmlspecialchars($row['Name']) . '" onclick="this.parentNode.submit();" style="cursor: pointer; opacity: ' . $opacity . ';" />';
       echo '<div class="product-labels">';
-      if ($row['qty'] == 0) {
+      if ($row['qty'] === 0) {
         echo '<span class="product-label soldout">Sold Out!</span>';
       }
       if ($row['isNew']) {
@@ -82,7 +85,9 @@ if (isset($_GET['ajax'])) {
   } else {
     echo '<p>No products found.</p>';
   }
+  // Close connection only if it's an AJAX request
   mysqli_close($conn);
+  exit; // Exit to prevent the rest of the page from rendering
 }
 ?>
 
@@ -194,7 +199,6 @@ if (isset($_GET['ajax'])) {
         } else {
           echo '<p>No products found.</p>';
         }
-        mysqli_close($conn);
         ?>
       </div>
     </div>

@@ -61,16 +61,16 @@ $userTableQuery = "CREATE TABLE User (
     isadmin BOOLEAN NOT NULL
 )";
 if (checkAndCreateTable($conn, 'User', $userTableQuery)) {
-    // Insert admin and user accounts into User table
+    // Insert admin account into User table
     $gId = generateUniqueId($conn, 'User', 'Userid');
     // Hash the password for security
     $hashed_password = password_hash('admin1234', PASSWORD_DEFAULT);
     $adminInsertQuery = "INSERT INTO User (Userid, Username, Password, Email, isadmin) VALUES 
         ('$gId', 'admin', '$hashed_password', 'admin@gmail.com', 1)";
     if (mysqli_query($conn, $adminInsertQuery)) {
-        echo "Admin and user accounts created successfully <br>";
+        echo "Admin account created successfully <br>";
     } else {
-        echo "Error inserting admin and user accounts: " . mysqli_error($conn);
+        echo "Error inserting admin account: " . mysqli_error($conn);
     }
 }
 

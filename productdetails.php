@@ -130,7 +130,8 @@ mysqli_close($conn);
                   <span style="text-decoration: line-through; color: #A9A9A9; padding-right: 10px;" id="price">$<?php echo $price; ?></span>
                   <span id="disprice">$<?php echo $discountedPrice; ?></span>
                 <?php else: ?>
-                  $<?php echo $price; ?>
+                  <span id="disprice" hidden>$0</span>
+                  <span id="price">$<?php echo $price; ?></span>
                 <?php endif; ?>
               </p>
               <p style="margin-bottom: 50px;"><?php echo $description; ?></p>
