@@ -82,32 +82,32 @@ $result = mysqli_query($conn, $sql);
         <div class="filter-options">
           <label for="sort">Sort By:</label>
           <select id="sort" name="sort">
-            <option value="LTH">Price Low To High</option>
-            <option value="HTL">Price High To Low</option>
-            <option value="OLDEST">Oldest</option>
-            <option value="NEWEST">Newest</option>
-            <option value="ATZ">A To Z</option>
-            <option value="ZTA">Z To A</option>
+            <option value="LTH" <?php if ($sort == 'LTH') echo 'selected'; ?>>Price Low To High</option>
+            <option value="HTL" <?php if ($sort == 'HTL') echo 'selected'; ?>>Price High To Low</option>
+            <option value="OLDEST" <?php if ($sort == 'OLDEST') echo 'selected'; ?>>Oldest</option>
+            <option value="NEWEST" <?php if ($sort == 'NEWEST') echo 'selected'; ?>>Newest</option>
+            <option value="ATZ" <?php if ($sort == 'ATZ') echo 'selected'; ?>>A To Z</option>
+            <option value="ZTA" <?php if ($sort == 'ZTA') echo 'selected'; ?>>Z To A</option>
           </select>
         </div>
         <div class="filter-options">
           <label for="category">Category:</label>
           <select id="category" name="category">
-            <option value="all">All</option>
-            <option value="top">Tops</option>
-            <option value="bottom">Bottoms</option>
-            <option value="dress">Dresses</option>
+            <option value="all" <?php if ($category == 'all') echo 'selected'; ?>>All</option>
+            <option value="top" <?php if ($category == 'top') echo 'selected'; ?>>Tops</option>
+            <option value="bottom" <?php if ($category == 'bottom') echo 'selected'; ?>>Bottoms</option>
+            <option value="dress" <?php if ($category == 'dress') echo 'selected'; ?>>Dresses</option>
           </select>
         </div>
         <div class="filter-options">
           <label for="color">Color:</label>
           <select id="color" name="color">
-            <option value="all">All</option>
-            <option value="red">Red</option>
-            <option value="blue">Blue</option>
-            <option value="black">Black</option>
-            <option value="white">White</option>
-            <option value="pink">Pink</option>
+            <option value="all" <?php if ($color == 'all') echo 'selected'; ?>>All</option>
+            <option value="red" <?php if ($color == 'red') echo 'selected'; ?>>Red</option>
+            <option value="blue" <?php if ($color == 'blue') echo 'selected'; ?>>Blue</option>
+            <option value="black" <?php if ($color == 'black') echo 'selected'; ?>>Black</option>
+            <option value="white" <?php if ($color == 'white') echo 'selected'; ?>>White</option>
+            <option value="pink" <?php if ($color == 'pink') echo 'selected'; ?>>Pink</option>
           </select>
         </div>
         <button type="submit">Apply Filters</button>
