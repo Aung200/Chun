@@ -10,7 +10,6 @@ if (!isset($_SESSION['islogin'])) {
     exit();
 }
 
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -35,6 +34,20 @@ $stmt->fetch();
 $stmt->close();
 
 $conn->close();
+
+// Retrieve the cart data from the session
+$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+
+// Calculate totals
+$subtotal = 0;
+$totalDiscount = 0;
+foreach ($cart as $item) {
+    $price = isset($item['disprice']) && $item['disprice'] > 0 ? $item['disprice'] : $item['price'];
+    $subtotal += $price * $item['qty'];
+    $totalDiscount += ($item['price'] - $price) * $item['qty'];
+}
+$shippingFee = 5.00;
+$totalPayment = $subtotal + $shippingFee;
 ?>
 
 <!DOCTYPE html>
@@ -101,6 +114,7 @@ $conn->close();
             flex-direction: row;
             height: 130px;
             align-items: center;
+            justify-content: space-between;
         }
 
         .product-infodetails-wrap img {
@@ -116,6 +130,13 @@ $conn->close();
 
         .details-text-wrap p {
             margin: 0px 0px 5px 0px;
+        }
+
+        .price-total-wrap {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            margin-left: auto;
         }
 
         .price-wrap {
@@ -174,59 +195,6 @@ $conn->close();
             margin-right: 55px;
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function populateProductInfo() {
-                const productInfoDiv = document.querySelector('.product-info');
-                let subtotal = 0;
-                let oldsubtotal = 0;
-
-                // Retrieve session data
-                const sessionData = JSON.parse(sessionStorage.getItem('cart')) || [];
-
-                sessionData.forEach(product => {
-                    const productDiv = document.createElement('div');
-                    productDiv.classList.add('product-infodetails-wrap');
-
-                    productDiv.innerHTML = `
-                        <img src="${product.img}" alt="${product.name}" width="100" />
-                        <div class="details-text-wrap">
-                            <p style="font-weight: bold;text-transform: uppercase;">${product.name}</p>
-                            <p>Size : <span style="text-transform: uppercase;">${product.size}</span></p>
-                            <p>Color : <span style="text-transform: uppercase;">${product.color}</span></p>
-                            <p>Qty : ${product.qty}</p>
-                        </div>
-                        <p style="margin: auto 50px auto auto;color: #a9a9a9; text-decoration: line-through;">
-                            $${(product.price*product.qty).toFixed(2)}
-                        </p>
-                        <p class="discount-price">$${(product.disprice*product.qty).toFixed(2)}</p>
-                    `;
-
-                    productInfoDiv.appendChild(productDiv);
-                    oldsubtotal += ((product.price * product.qty) - (product.disprice * product.qty));
-                    subtotal += product.disprice * product.qty;
-                });
-
-                document.getElementById('discountp').textContent = `- $${oldsubtotal.toFixed(2)}`;
-                document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-                const shipping = parseFloat(document.getElementById('shipping').textContent.replace('$', ''));
-                document.getElementById('total').textContent = `$${(subtotal + shipping).toFixed(2)}`;
-            }
-
-            populateProductInfo();
-
-            // Add event listener to form submit
-            document.getElementById('checkout-form').addEventListener('submit', function(event) {
-                const cartItems = JSON.stringify(JSON.parse(sessionStorage.getItem('cart')) || []);
-                const cartInput = document.createElement('input');
-                cartInput.type = 'hidden';
-                cartInput.name = 'cart_items';
-                cartInput.value = cartItems;
-                this.appendChild(cartInput);
-            });
-        });
-    </script>
-
 </head>
 
 <body>
@@ -253,25 +221,44 @@ $conn->close();
                     </div>
                     <div class="user-form product-info">
                         <h2 class="productinfo-h2">Product Information</h2>
-                        <!-- Product details will be populated here -->
+                        <?php if (empty($cart)): ?>
+                            <p>Your cart is empty.</p>
+                        <?php else: ?>
+                            <?php foreach ($cart as $item): ?>
+                                <div class="product-infodetails-wrap">
+                                    <img src="<?php echo htmlspecialchars($item['img']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" width="100" />
+                                    <div class="details-text-wrap">
+                                        <p><?php echo htmlspecialchars($item['name']); ?></p>
+                                        <p><b>Size :</b> <span style="text-transform: uppercase;"><?php echo htmlspecialchars($item['size']); ?></span></p>
+                                        <p><b>Color :</b> <span style="text-transform: uppercase;"><?php echo htmlspecialchars($item['color']); ?></span></p>
+                                        <p><b>Quantity :</b> <?php echo $item['qty']; ?></p>
+                                    </div>
+                                    <div class="price-total-wrap">
+                                        <p style="text-decoration: line-through; color: #a9a9a9;">$<?php echo number_format($item['price'], 2); ?></p>
+                                        <p style="margin-left: 15px;">$<?php echo number_format($item['disprice'], 2); ?></p>
+                                        <p style="margin-left: 25px;margin-right: 25px;">Total: $<?php echo number_format($price * $item['qty'], 2); ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="row price-wrap">
                     <div style="display: flex; width: 100%; justify-content: space-between; margin: 0">
                         <h3 class="discountp">Discount :</h3>
-                        <h3 class="discountp" id="discountp">$0.00</h3>
+                        <h3 class="discountp" id="discountp">-$<?php echo number_format($totalDiscount, 2); ?></h3>
                     </div>
                     <div style="display: flex; width: 100%; justify-content: space-between; margin: 0">
                         <h3 class="subtotal">Subtotal :</h3>
-                        <h3 class="subtotal" id="subtotal">$0.00</h3>
+                        <h3 class="subtotal" id="subtotal">$<?php echo number_format($subtotal, 2); ?></h3>
                     </div>
                     <div style="display: flex; width: 100%; justify-content: space-between; margin: 0">
                         <h3 class="shipping">Shipping Fee :</h3>
-                        <h3 class="shipping" id="shipping">$5.00</h3>
+                        <h3 class="shipping" id="shipping">$<?php echo number_format($shippingFee, 2); ?></h3>
                     </div>
                     <div style="display: flex; width: 100%; justify-content: space-between; margin: 0">
                         <h3 class="total">Total Payment :</h3>
-                        <h3 class="total" id="total">$0.00</h3>
+                        <h3 class="total" id="total">$<?php echo number_format($totalPayment, 2); ?></h3>
                     </div>
                 </div>
                 <div class="row payment-wrap">

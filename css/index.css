@@ -53,6 +53,7 @@ a {
 .filter-container {
   display: flex;
   justify-content: space-around;
+  align-item: center;
   padding: 20px;
 }
 
@@ -75,6 +76,12 @@ a {
   margin-bottom: 10px;
   font-family: 'Amaranth', sans-serif;
   background-color: #d1e9f6;
+}
+
+.filter-btn{
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 input[type="range"]::-webkit-slider-runnable-track { 
@@ -107,8 +114,6 @@ input[type="range"]::-webkit-slider-thumb {
 .product-item {
   flex: 0 0 calc(20% - 10px);
   margin-bottom: 30px;
-  /* padding: 10px; */
-  /* border: 1px solid #ccc; */
   border-radius: 3px;
   text-align: center;
   position: relative;

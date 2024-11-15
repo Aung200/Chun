@@ -39,7 +39,7 @@ $is_admin = isset($_SESSION['isadmin']) ? $_SESSION['isadmin'] : 0;
                             </ul>
                         </li>
                         <li>
-                            <form class="search-form" action="./search.php" method="post">
+                            <form class="search-form" action="search.php" method="post">
                                 <input type="text" placeholder="Search" name="search" />
                                 <button type="submit">Go</button>
                             </form>

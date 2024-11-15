@@ -19,27 +19,30 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$userid = $_SESSION['userid'];
+$userid = str_pad($_SESSION['userid'], 3, '0', STR_PAD_LEFT); // Ensure userid is a three-digit string
 $name = sanitizeInput($_POST['name']);
 $email = sanitizeInput($_POST['email']);
 $address = sanitizeInput($_POST['address']);
 $phone = sanitizeInput($_POST['phone']);
 $payment_method = sanitizeInput($_POST['payment-method']);
 
-// Retrieve the cart items from session storage via JavaScript
-$cart_items = json_decode($_POST['cart_items'], true);
+// Retrieve the cart items from the session
+$cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
 $all_successful = true;
 
 foreach ($cart_items as $item) {
     $orderid = generateUniqueId($conn, 'Order', 'orderid');
     $productname = sanitizeInput($item['name']);
-    $price = sanitizeInput($item['disprice']) * sanitizeInput($item['qty']);
+    $price = sanitizeInput($item['disprice']) > 0 ? sanitizeInput($item['disprice']) * sanitizeInput($item['qty']) : sanitizeInput($item['price']) * sanitizeInput($item['qty']);
     $size = sanitizeInput($item['size']);
     $color = sanitizeInput($item['color']);
     $qty = sanitizeInput($item['qty']);
     $image_path = sanitizeInput($item['img']);
-    $prodid = sanitizeInput($item['id']);
+    $prodid = str_pad(sanitizeInput($item['id']), 3, '0', STR_PAD_LEFT); // Ensure Prodid is a three-digit string
+
+    // Debugging output
+    echo "Prodid: $prodid<br>";
 
     // Construct the SQL query for inserting order
     $sql = "INSERT INTO `Order` (orderid, productname, price, size, color, address, phoneno, qty, image_path, payment_method, ordered_datetime, Prodid, userid) 
@@ -63,6 +66,8 @@ foreach ($cart_items as $item) {
 $conn->close();
 
 if ($all_successful) {
+    // Clear the cart after successful order
+    unset($_SESSION['cart']);
     // Redirect to a thank you or order confirmation page only if all queries were successful
     header('Location: thankyou.php');
     exit();

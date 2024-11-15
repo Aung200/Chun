@@ -4,6 +4,10 @@ $username = "root";
 $password = "";
 $dbname = "vanwalk";
 
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -38,6 +42,50 @@ if ($prodid > 0) {
   $error = "Invalid product ID.";
 }
 
+// Check if the product is already in the cart
+$inCart = false;
+if (isset($_SESSION['cart'])) {
+  foreach ($_SESSION['cart'] as $item) {
+    if ($item['id'] == $prodid) {
+      $inCart = true;
+      break;
+    }
+  }
+}
+
+// Handle add to cart form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+  $product = [
+    'cid' => time() . rand(1000, 9999), // Generate a unique ID
+    'img' => $_POST['imgsrc'],
+    'discount' => $_POST['discount'],
+    'name' => $_POST['name'],
+    'id' => $_POST['id'],
+    'price' => $_POST['price'],
+    'disprice' => $_POST['disprice'],
+    'color' => $_POST['color'],
+    'size' => $_POST['size'],
+    'qty' => $_POST['qty'],
+    'maxqty' => $_POST['maxqty']
+  ];
+
+  if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+  }
+
+  // Check if the product is already in the cart
+  foreach ($_SESSION['cart'] as $item) {
+    if ($item['id'] === $product['id']) {
+      header("Location: productdetails.php?id=" . $product['id'] . "&error=already_in_cart");
+      exit();
+    }
+  }
+
+  $_SESSION['cart'][] = $product;
+  header("Location: cart.php");
+  exit();
+}
+
 mysqli_close($conn);
 ?>
 
@@ -49,7 +97,6 @@ mysqli_close($conn);
   <meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="./css/index.css" />
   <link rel="stylesheet" type="text/css" href="./css/header-footer.css" />
-  <script type="text/javascript" src="./js/addtocart.js"></script>
   <style>
     /* Add your CSS styles here */
     .productdetails-container {
@@ -120,26 +167,33 @@ mysqli_close($conn);
             <img src="<?php echo $imagePath; ?>" alt="<?php echo $name; ?>" />
           </div>
           <div class="product-details">
-            <form class="add-to-cart-form" onsubmit="addToCart(event)">
-              <span id="imgsrc" hidden><?php echo $imagePath; ?></span>
-              <span id="discount" hidden><?php echo $discount; ?></span>
+            <form class="add-to-cart-form" method="post" action="productdetails.php">
+              <input type="hidden" name="imgsrc" value="<?php echo $imagePath; ?>">
+              <input type="hidden" name="discount" value="<?php echo $discount; ?>">
               <h1 id="name"><?php echo $name; ?></h1>
-              <span id="id" hidden><?php echo $prodid; ?></span>
+              <input type="hidden" name="name" value="<?php echo $name; ?>">
+              <input type="hidden" name="id" value="<?php echo $prodid; ?>">
               <p style="font-weight: bold;margin: 0px;">
                 <?php if ($discountedPrice): ?>
                   <span style="text-decoration: line-through; color: #A9A9A9; padding-right: 10px;" id="price">$<?php echo $price; ?></span>
                   <span id="disprice">$<?php echo $discountedPrice; ?></span>
+                  <input type="hidden" name="price" value="<?php echo $price; ?>">
+                  <input type="hidden" name="disprice" value="<?php echo $discountedPrice; ?>">
                 <?php else: ?>
                   <span id="disprice" hidden>$0</span>
                   <span id="price">$<?php echo $price; ?></span>
+                  <input type="hidden" name="price" value="<?php echo $price; ?>">
+                  <input type="hidden" name="disprice" value="0">
                 <?php endif; ?>
               </p>
               <p style="margin-bottom: 50px;"><?php echo $description; ?></p>
               <label for="color" style="margin-bottom: 18px;">Color: <span id="color" style="text-transform: uppercase;"><?php echo $color; ?></span></label>
-              <label for="size" style="margin-bottom: 18px;" id="size" >Size: Free</label>
+              <input type="hidden" name="color" value="<?php echo $color; ?>">
+              <label for="size" style="margin-bottom: 18px;" id="size">Size: Free</label>
+              <input type="hidden" name="size" value="Free">
               <label for="qty">Quantity:</label>
               <label id="maxqty" hidden><?php echo $qty; ?></label>
-              <select id="qty">
+              <select id="qty" name="qty">
                 <?php if ($qty == 0): ?>
                   <option value="0">0</option>
                 <?php else: ?>
@@ -151,10 +205,13 @@ mysqli_close($conn);
                   ?>
                 <?php endif; ?>
               </select>
+              <input type="hidden" name="maxqty" value="<?php echo $qty; ?>">
               <?php if ($qty == 0): ?>
                 <button class="cart_btn sold-out" type="submit" disabled>Sold Out</button>
+              <?php elseif ($inCart): ?>
+                <button class="cart_btn" type="button" disabled>Already in Cart</button>
               <?php else: ?>
-                <button class="cart_btn" type="submit">Add to Cart</button>
+                <button class="cart_btn" type="submit" name="add_to_cart">Add to Cart</button>
               <?php endif; ?>
             </form>
           </div>
